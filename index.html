@@ -176,7 +176,7 @@
 
         var textAnimate = eval(Jscex.compile("async", function () {
 		    var together = new Date();
-		    together.setFullYear(2024,2 , 7); 			
+		    together.setFullYear(2024,2 , 8); 			
 		    together.setHours(0);							
 		    together.setMinutes(0);				
 		    together.setSeconds(0);					
@@ -187,7 +187,16 @@
 		    $("#code").show().typewriter();
             $("#clock-box").fadeIn(500);
             while (true) {
-                timeElapse(together);
+                var now = new Date();
+                var timeRemaining = together.getTime() - now.getTime();
+                var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+                var countdownText = "Còn " + days + " ngày " + hours + " giờ " + minutes + " phút " + seconds + " giây.";
+        
+                $("#clock-box").text(countdownText);
                 $await(Jscex.Async.sleep(1000));
             }
         }));
